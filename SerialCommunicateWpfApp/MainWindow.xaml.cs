@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO.Ports;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace SerialCommunicateWpfApp
 {
@@ -33,8 +34,21 @@ namespace SerialCommunicateWpfApp
 
             var timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += new EventHandler(SerialReadLine);
+            timer.Tick += new EventHandler(TickShowReception);
             timer.Start();
+        }
+
+        private async void TickShowReception(object sender, EventArgs e)
+        {
+            if (serialPort != null)
+            {
+                if (serialPort.IsOpen == true)
+                {
+                    string readLine = await Task.Run(new Func<string>(() => serialPort.ReadLine()));
+                    ReadLineList.Items.Add(readLine);
+                    ReadLineList.Items.Refresh();
+                }
+            }
         }
 
         private SerialPort CreateSerialPort()
@@ -46,19 +60,6 @@ namespace SerialCommunicateWpfApp
             serialPort.Encoding = Encoding.UTF8;
             serialPort.ReadTimeout = 100000;
             return serialPort;
-        }
-
-        void SerialReadLine(object sender, EventArgs e)
-        {
-            if (serialPort == null) {
-                return;
-            }
-
-            if (serialPort.IsOpen == true)
-            {
-                ReadLineList.Items.Add(serialPort.ReadLine());
-                ReadLineList.Items.Refresh();
-            }
         }
 
         private void OpenPortBtn_Click(object sender, RoutedEventArgs e)
@@ -103,7 +104,7 @@ namespace SerialCommunicateWpfApp
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
     }
 }

@@ -16,6 +16,7 @@ using System.IO.Ports;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace SerialCommunicateWpfApp
 {
@@ -25,6 +26,7 @@ namespace SerialCommunicateWpfApp
     public partial class MainWindow : Window
     {
         SerialPort serialPort = null;
+        int count = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -105,6 +107,37 @@ namespace SerialCommunicateWpfApp
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string constr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorDB.mdf;Integrated Security=True";
+            var sqlConnection = new SqlConnection(constr);
+            try
+            {
+                sqlConnection.Open();
+                var sqlSelect = new SqlCommand("SELECT * FROM SENSORS", sqlConnection);
+                SqlDataReader reader = sqlSelect.ExecuteReader();
+                while (reader.Read() == true)
+                {
+                    Console.WriteLine((int)reader["Id"]);
+                    Console.WriteLine((Boolean)reader["Current"]);
+                    Console.WriteLine((int)reader["Temperature"]);
+                }
+                reader.Close();
+
+                var sqlCount = new SqlCommand("SELECT COUNT(*) FROM SENSORS" ,sqlConnection);
+                int count = (int)sqlCount.ExecuteScalar();
+                var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [Current], [Temperature]) VALUES (@Id, @Current, @Temperature)", sqlConnection);
+                sqlInsert.Parameters.AddWithValue("@Id", count);
+                sqlInsert.Parameters.AddWithValue("@Current", 0);
+                sqlInsert.Parameters.AddWithValue("@Temperature", 50);
+                sqlInsert.ExecuteNonQuery();
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
         }
     }
 }

@@ -33,9 +33,34 @@ namespace SerialCommunicateWpfApp
             ClosePortBtn.IsEnabled = false;
 
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Interval = TimeSpan.FromMilliseconds(1000); //ある程度秒数に余裕を待たせないとシリアルポートから読み込みができない
             timer.Tick += new EventHandler(TickShowReception);
             timer.Start();
+        }
+
+        private int CalcChecksum(byte[] buffer)
+        {
+            int sum = 0;
+            for (int i = 2; i < buffer.Length - 1; i++)
+            {
+                sum += buffer[i];
+            }
+            return 0xFF - (sum & 0xFF);
+        }
+
+        private byte[] SerialReadBuffer()
+        {
+            var buffer = new byte[16];
+
+            serialPort.Read(buffer, 0, buffer.Length);
+            if (buffer.First() == 0xFF && CalcChecksum(buffer) == buffer[buffer.Length - 1]) {
+                return buffer;
+            }
+            else
+            {
+                serialPort.DiscardInBuffer();
+                return new byte[0];
+            }
         }
 
         private async void TickShowReception(object sender, EventArgs e)
@@ -44,9 +69,24 @@ namespace SerialCommunicateWpfApp
             {
                 if (serialPort.IsOpen == true)
                 {
-                    string readLine = await Task.Run(new Func<string>(() => serialPort.ReadLine()));
-                    ReadLineList.Items.Add(readLine);
-                    ReadLineList.Items.Refresh();
+                    byte[] buffer = await Task.Run(() => SerialReadBuffer());
+                    string readLine = "";
+
+                    for (int i = 2; i < buffer.Length - 1; i++) {
+                        readLine += buffer[i] + " ";
+                    }
+
+                    if (readLine != "")
+                    {
+                        ReadLineList.Items.Add(readLine);
+                        ReadLineList.Items.Refresh();
+                    }
+                    else
+                    {
+                        //TODO: テストが終わったらさくじょする
+                        ReadLineList.Items.Add("読み取りに失敗しました");
+                        ReadLineList.Items.Refresh();
+                    }
                 }
             }
         }

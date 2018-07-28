@@ -35,7 +35,7 @@ namespace SerialCommunicateWpfApp
             ClosePortBtn.IsEnabled = false;
 
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000); //ある程度秒数に余裕を待たせないとシリアルポートから読み込みができない
+            timer.Interval = TimeSpan.FromMilliseconds(300); //ある程度秒数に余裕を待たせないとシリアルポートから読み込みができない
             timer.Tick += new EventHandler(TickShowReception);
             timer.Start();
         }
@@ -81,12 +81,6 @@ namespace SerialCommunicateWpfApp
                     if (readLine != "")
                     {
                         ReadLineList.Items.Add(readLine);
-                        ReadLineList.Items.Refresh();
-                    }
-                    else
-                    {
-                        //TODO: テストが終わったらさくじょする
-                        ReadLineList.Items.Add("読み取りに失敗しました");
                         ReadLineList.Items.Refresh();
                     }
                 }

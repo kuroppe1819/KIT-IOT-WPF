@@ -26,8 +26,7 @@ namespace SerialCommunicateWpfApp
     {
         SerialPort serialPort = null;
         SqlConnection sqlConnection = null;
-        string localDbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorDB.mdf;Integrated Security=True";
-
+        string localDbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\Sensors.mdf;Integrated Security=True";
         public MainWindow()
         {
             InitializeComponent();
@@ -80,8 +79,9 @@ namespace SerialCommunicateWpfApp
             {
                 var sqlCount = new SqlCommand("SELECT COUNT(*) FROM SENSORS", sqlConnection);
                 int count = (int)sqlCount.ExecuteScalar();
-                var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [DateTime], [Current], [Temperature], [Humidity], [Illumination], [Dust]) VALUES (@Id, @DateTime, @Current, @Temperature, @Humidity, @Illumination, @Dust)", sqlConnection);
+                var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [Area], [DateTime], [Current], [Temperature], [Humidity], [Illumination], [Dust]) VALUES (@Id, @Area, @DateTime, @Current, @Temperature, @Humidity, @Illumination, @Dust)", sqlConnection);
                 sqlInsert.Parameters.AddWithValue("@Id", count);
+                sqlInsert.Parameters.AddWithValue("@Area", (buffer[2] << 8) + buffer[3]);
                 sqlInsert.Parameters.AddWithValue("@DateTime", new DateTime(int.Parse($"20{buffer[4]}"), buffer[5], buffer[6], buffer[7], buffer[8], buffer[9]));
                 sqlInsert.Parameters.AddWithValue("@Current", (buffer[10] == 0xFE) ? SqlByte.Null : buffer[10]);
                 sqlInsert.Parameters.AddWithValue("@Temperature", (buffer[11] == 0xFE) ? SqlByte.Null : buffer[11]);

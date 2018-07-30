@@ -17,16 +17,16 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace SerialCommunicateWpfApp
 {
-    /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
-    /// </summary>
     public partial class MainWindow : Window
     {
         SerialPort serialPort = null;
-        int count = 0;
+        SqlConnection sqlConnection = null;
+        string localDbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorDB.mdf;Integrated Security=True";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +35,11 @@ namespace SerialCommunicateWpfApp
             ClosePortBtn.IsEnabled = false;
 
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(300); //ある程度秒数に余裕を待たせないとシリアルポートから読み込みができない
+            timer.Interval = TimeSpan.FromMilliseconds(1000); //ある程度秒数に余裕を待たせないとシリアルポートから読み込みができない
             timer.Tick += new EventHandler(TickShowReception);
             timer.Start();
+
+            sqlConnection = new SqlConnection(localDbPath);
         }
 
         private int CalcChecksum(byte[] buffer)
@@ -55,7 +57,8 @@ namespace SerialCommunicateWpfApp
             var buffer = new byte[16];
 
             serialPort.Read(buffer, 0, buffer.Length);
-            if (buffer.First() == 0xFF && CalcChecksum(buffer) == buffer[buffer.Length - 1]) {
+            if (buffer.First() == 0xFF && CalcChecksum(buffer) == buffer[buffer.Length - 1])
+            {
                 return buffer;
             }
             else
@@ -65,23 +68,52 @@ namespace SerialCommunicateWpfApp
             }
         }
 
-        private async void TickShowReception(object sender, EventArgs e)
+        private void InsertOf(byte[] buffer)
+        {
+            if (sqlConnection.State == ConnectionState.Closed)
+            {
+                sqlConnection.Open();
+            }
+
+            try
+            {
+                var sqlCount = new SqlCommand("SELECT COUNT(*) FROM SENSORS", sqlConnection);
+                int count = (int)sqlCount.ExecuteScalar();
+                var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [DateTime], [Current], [Temperature], [Humidity], [Illumination], [Dust]) VALUES (@Id, @DateTime, @Current, @Temperature, @Humidity, @Illumination, @Dust)", sqlConnection);
+                sqlInsert.Parameters.AddWithValue("@Id", count);
+                sqlInsert.Parameters.AddWithValue("@DateTime", "2018-07-28 15:58:00");
+                sqlInsert.Parameters.AddWithValue("@Current", 0);
+                sqlInsert.Parameters.AddWithValue("@Temperature", 50);
+                sqlInsert.Parameters.AddWithValue("@Humidity", 26);
+                sqlInsert.Parameters.AddWithValue("@Illumination", 200);
+                sqlInsert.Parameters.AddWithValue("@Dust", 0xFE);
+                sqlInsert.ExecuteNonQuery();
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        private void TickShowReception(object sender, EventArgs e)
         {
             if (serialPort != null)
             {
                 if (serialPort.IsOpen == true)
                 {
-                    byte[] buffer = await Task.Run(() => SerialReadBuffer());
+                    byte[] buffer = SerialReadBuffer();
                     string readLine = "";
 
-                    for (int i = 2; i < buffer.Length - 1; i++) {
+                    for (int i = 2; i < buffer.Length - 1; i++)
+                    {
                         readLine += buffer[i] + " ";
                     }
 
-                    if (readLine != "")
+                    if (buffer.Length != 0)
                     {
                         ReadLineList.Items.Add(readLine);
                         ReadLineList.Items.Refresh();
+                        InsertOf(buffer);
                     }
                 }
             }
@@ -145,8 +177,8 @@ namespace SerialCommunicateWpfApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string constr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorDB.mdf;Integrated Security=True";
-            var sqlConnection = new SqlConnection(constr);
+
+            var sqlConnection = new SqlConnection(localDbPath);
             try
             {
                 sqlConnection.Open();
@@ -155,18 +187,11 @@ namespace SerialCommunicateWpfApp
                 while (reader.Read() == true)
                 {
                     Console.WriteLine((int)reader["Id"]);
+                    Console.WriteLine((DateTime)reader["DateTime"]);
                     Console.WriteLine((Boolean)reader["Current"]);
                     Console.WriteLine((int)reader["Temperature"]);
                 }
                 reader.Close();
-
-                var sqlCount = new SqlCommand("SELECT COUNT(*) FROM SENSORS" ,sqlConnection);
-                int count = (int)sqlCount.ExecuteScalar();
-                var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [Current], [Temperature]) VALUES (@Id, @Current, @Temperature)", sqlConnection);
-                sqlInsert.Parameters.AddWithValue("@Id", count);
-                sqlInsert.Parameters.AddWithValue("@Current", 0);
-                sqlInsert.Parameters.AddWithValue("@Temperature", 50);
-                sqlInsert.ExecuteNonQuery();
             }
             finally
             {

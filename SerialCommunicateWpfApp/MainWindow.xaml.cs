@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace SerialCommunicateWpfApp
 {
@@ -81,12 +82,12 @@ namespace SerialCommunicateWpfApp
                 int count = (int)sqlCount.ExecuteScalar();
                 var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [DateTime], [Current], [Temperature], [Humidity], [Illumination], [Dust]) VALUES (@Id, @DateTime, @Current, @Temperature, @Humidity, @Illumination, @Dust)", sqlConnection);
                 sqlInsert.Parameters.AddWithValue("@Id", count);
-                sqlInsert.Parameters.AddWithValue("@DateTime", "2018-07-28 15:58:00");
-                sqlInsert.Parameters.AddWithValue("@Current", 0);
-                sqlInsert.Parameters.AddWithValue("@Temperature", 50);
-                sqlInsert.Parameters.AddWithValue("@Humidity", 26);
-                sqlInsert.Parameters.AddWithValue("@Illumination", 200);
-                sqlInsert.Parameters.AddWithValue("@Dust", 0xFE);
+                sqlInsert.Parameters.AddWithValue("@DateTime", new DateTime(int.Parse($"20{buffer[4]}"), buffer[5], buffer[6], buffer[7], buffer[8], buffer[9]));
+                sqlInsert.Parameters.AddWithValue("@Current", (buffer[10] == 0xFE) ? SqlByte.Null : buffer[10]);
+                sqlInsert.Parameters.AddWithValue("@Temperature", (buffer[11] == 0xFE) ? SqlByte.Null : buffer[11]);
+                sqlInsert.Parameters.AddWithValue("@Humidity", (buffer[12] == 0xFE) ? SqlByte.Null : buffer[12]);
+                sqlInsert.Parameters.AddWithValue("@Illumination", (buffer[13] == 0xFE) ? SqlByte.Null : buffer[13]);
+                sqlInsert.Parameters.AddWithValue("@Dust", (buffer[14] == 0xFE) ? SqlByte.Null : buffer[14]);
                 sqlInsert.ExecuteNonQuery();
             }
             finally

@@ -55,16 +55,24 @@ namespace SerialCommunicateWpfApp
 
         private byte[] SerialReadBuffer()
         {
+            while (serialPort.ReadByte() != 0xFF) { }　//スタートビットを受信するまで調整する
             var buffer = new byte[16];
+            serialPort.Read(buffer, 0, buffer.Length - 1);
 
-            serialPort.Read(buffer, 0, buffer.Length);
-            if (buffer.First() == 0xFF && CalcChecksum(buffer) == buffer[buffer.Length - 1])
+            // 元のフレーム形式に戻す
+            for (int i = buffer.Length - 2; i >= 0; i--)
+            {
+                buffer[i+1] = buffer[i];
+
+            }
+            buffer[0] = 0xFF;
+
+            if (CalcChecksum(buffer) == buffer[buffer.Length - 1])
             {
                 return buffer;
             }
             else
             {
-                serialPort.DiscardInBuffer();
                 return new byte[0];
             }
         }
@@ -97,13 +105,13 @@ namespace SerialCommunicateWpfApp
             }
         }
 
-        private void TickShowReception(object sender, EventArgs e)
+        private async void TickShowReception(object sender, EventArgs e)
         {
             if (serialPort != null)
             {
                 if (serialPort.IsOpen == true)
                 {
-                    byte[] buffer = SerialReadBuffer();
+                    byte[] buffer = await Task.Run(new Func<byte[]>(() => SerialReadBuffer()));
                     string readLine = "";
 
                     for (int i = 2; i < buffer.Length - 1; i++)

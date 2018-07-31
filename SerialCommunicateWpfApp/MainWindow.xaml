@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SerialCommunicateWpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="550">
+        Title="MainWindow" Height="350" Width="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="214*"/>
@@ -16,32 +16,15 @@
             <ComboBoxItem Content="9600"/>
             <ComboBoxItem Content="115200"/>
         </ComboBox>
-        <ProgressBar x:Name="ProgressStatus" HorizontalAlignment="Left" Height="22" Margin="404,41,0,0" VerticalAlignment="Top" Width="95"/>
+        <ProgressBar x:Name="ProgressStatus" HorizontalAlignment="Left" Height="22" Margin="320,41,0,0" VerticalAlignment="Top" Width="95"/>
+        <GroupBox Header=" Recieve Data" HorizontalAlignment="Left" Height="213" Margin="20,87,0,0" VerticalAlignment="Top" Width="277">
+            <ListBox x:Name="ReadLineList" HorizontalAlignment="Left" Height="171" Margin="10,10,0,0" VerticalAlignment="Top" Width="244"/>
+        </GroupBox>
         <Label Content="Port Name" HorizontalAlignment="Left" Margin="20,15,0,0" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.78,0.577"/>
         <Label Content="Baund Rate" HorizontalAlignment="Left" Margin="167,15,0,0" VerticalAlignment="Top" Width="80"/>
-        <Label Content="Progress" HorizontalAlignment="Left" Margin="404,15,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button x:Name="OpenPortBtn" Content="Open Port" HorizontalAlignment="Left" Margin="404,100,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="OpenPortBtn_Click"/>
-        <Button x:Name="ClosePortBtn" Content="Close Port" HorizontalAlignment="Left" Margin="404,183,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="ClosePortBtn_Click"/>
-        <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="421,265,0,0" VerticalAlignment="Top" Width="63" Click="ExportBtn_Click"/>
-        <GroupBox Header="Area1" HorizontalAlignment="Left" Height="100" Margin="20,88,0,0" VerticalAlignment="Top" Width="362">
-            <StackPanel HorizontalAlignment="Center" Height="60" Margin="10,10,10,10" VerticalAlignment="Center" Width="340" Orientation="Horizontal">
-                <StackPanel Width="85" Margin="0,0,0,10">
-                    <Label Content="Temperatre" HorizontalAlignment="Center"/>
-                    <Label Content="value" HorizontalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Width="85" Margin="0,0,0,10">
-                    <Label Content="Humidity" HorizontalAlignment="Center"/>
-                    <Label Content="value" HorizontalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Width="85" Margin="0,0,0,10">
-                    <Label Content="Illuminaon" HorizontalAlignment="Center"/>
-                    <Label Content="value" HorizontalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Width="85" Margin="0,0,0,10">
-                    <Label Content="Curret" HorizontalAlignment="Center"/>
-                    <ProgressBar Height="23" Margin="10,0"/>
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+        <Label Content="Progress" HorizontalAlignment="Left" Margin="320,15,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="OpenPortBtn" Content="Open Port" HorizontalAlignment="Left" Margin="320,102,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="OpenPortBtn_Click"/>
+        <Button x:Name="ClosePortBtn" Content="Close Port" HorizontalAlignment="Left" Margin="320,185,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="ClosePortBtn_Click"/>
+        <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="337,267,0,0" VerticalAlignment="Top" Width="63" Click="ExportBtn_Click"/>
     </Grid>
 </Window>

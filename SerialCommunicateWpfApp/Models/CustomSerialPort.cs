@@ -31,6 +31,7 @@ namespace SerialCommunicateWpfApp.Models {
             var buffer = new byte[frameLength]; //フレーム長を読み取る
             Read(buffer, 0, buffer.Length); //フレーム長とチェックサムに挟まれた分だけ読み取る
             int checksum = ReadByte(); //チェックサムを読み取る
+
             if (checksum == CustomSerialPort.CalcChecksum(buffer)) {
                 return buffer;
             } else {

@@ -8,6 +8,11 @@ using SerialCommunicateWpfApp.Models;
 namespace SerialCommunicateWpfApp.Controller {
     class MainController {
         private MainModel model = new MainModel();
+        private Action<string> renderOfList;
+        public Action<string> RenderOfList {
+            set { renderOfList = value; }
+            get { return renderOfList; }
+        }
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);
@@ -30,12 +35,21 @@ namespace SerialCommunicateWpfApp.Controller {
         }
 
         private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
+            byte[] readBytes;
             try {
-                byte[] readBytes = model.ReadFrames();
-            } catch (InvalidReadByteException ex) {
+                readBytes = model.ReadFrames();
+            } catch (Exception ex) {
                 Console.WriteLine(ex);
                 //親機に再送処理を通知する場合はここに処理を書く
                 return;
+            }
+
+            if (renderOfList != null && readBytes != null) {
+                string readLine = readBytes[0].ToString();
+                for (int i = 1; i < readBytes.Length; i++) {
+                    readLine += " " + readBytes[i].ToString();
+                }
+                renderOfList(readLine);
             }
         }
     }

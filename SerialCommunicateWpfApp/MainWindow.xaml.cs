@@ -19,7 +19,6 @@ using System.Threading;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.SqlTypes;
-using Microsoft.Office.Interop.Excel;
 using SerialCommunicateWpfApp.Controller;
 
 namespace SerialCommunicateWpfApp {
@@ -28,7 +27,7 @@ namespace SerialCommunicateWpfApp {
         public MainWindow() {
             InitializeComponent();
             InitView();
-
+            controller.RenderOfList = RenderOfSerialData;
         }
 
         private void InitView() {
@@ -39,6 +38,13 @@ namespace SerialCommunicateWpfApp {
         private void OpenBtnEnabled(Boolean enabled) {
             OpenPortBtn.IsEnabled = enabled;
             ClosePortBtn.IsEnabled = !enabled;
+        }
+
+        private void RenderOfSerialData(string readLine) {
+            ReadLineList.Dispatcher.Invoke(new Action(() => {
+                ReadLineList.Items.Add(readLine);
+                ReadLineList.Items.Refresh();
+            }));
         }
 
         //    private void InsertOf(byte[] buffer)
@@ -66,30 +72,6 @@ namespace SerialCommunicateWpfApp {
         //        finally
         //        {
         //            sqlConnection.Close();
-        //        }
-        //    }
-
-        //    private async void TickShowReception(object sender, EventArgs e)
-        //    {
-        //        if (serialPort != null)
-        //        {
-        //            if (serialPort.IsOpen == true)
-        //            {
-        //                byte[] buffer = await Task.Run(new Func<byte[]>(() => SerialReadBuffer()));
-        //                string readLine = "";
-
-        //                for (int i = 2; i < buffer.Length - 1; i++)
-        //                {
-        //                    readLine += buffer[i] + " ";
-        //                }
-
-        //                if (buffer.Length != 0)
-        //                {
-        //                    ReadLineList.Items.Add(readLine);
-        //                    ReadLineList.Items.Refresh();
-        //                    InsertOf(buffer);
-        //                }
-        //            }
         //        }
         //    }
 

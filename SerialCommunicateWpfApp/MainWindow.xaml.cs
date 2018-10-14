@@ -8,7 +8,7 @@ namespace SerialCommunicateWpfApp {
         public MainWindow() {
             InitializeComponent();
             InitView();
-            controller.renderOfList = RenderOfSerialData;
+            controller.RenderOfList = RenderOfSerialData;
         }
 
         private void InitView() {

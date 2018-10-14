@@ -8,7 +8,7 @@ using SerialCommunicateWpfApp.Models;
 namespace SerialCommunicateWpfApp.Controller {
     class MainController {
         private MainModel model = new MainModel();
-        public Action<string> renderOfList { get; set; }
+        public Action<string> RenderOfList { get; set; }
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);
@@ -40,12 +40,12 @@ namespace SerialCommunicateWpfApp.Controller {
                 return;
             }
 
-            if (renderOfList != null && readBytes != null) {
+            if (RenderOfList != null && readBytes != null) {
                 string readLine = readBytes[0].ToString();
                 for (int i = 1; i < readBytes.Length; i++) {
                     readLine += " " + readBytes[i].ToString();
                 }
-                renderOfList(readLine);
+                RenderOfList(readLine);
             }
         }
     }

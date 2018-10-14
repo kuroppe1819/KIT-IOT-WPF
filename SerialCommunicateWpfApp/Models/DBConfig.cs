@@ -3,14 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
-static class DBConfig {
-    private static string server = "localhost";        // MySQLサーバホスト名
-    private static string user = "sopackuser";         // MySQLユーザ名
-    private static string pwd = "sopa-0001";           // MySQLパスワード
-    private static string database = "kobayashi_iot";  // 接続するデータベース名
+public sealed class DBConfig {
+    private string server = "localhost";        // MySQLサーバホスト名
+    private string user = "sopackuser";         // MySQLユーザ名
+    private string pwd = "sopa-0001";           // MySQLパスワード
+    private string database = "kobayashi_iot";  // 接続するデータベース名
+    //public static string CONNECTION_STRING {
+    //    get { return string.Format("Server={0};Database={1};Uid={2};Pwd={3}", server, database, user, pwd); }
+    //}
+    private static DBConfig dbConfig = new DBConfig();
+    private MySqlBaseConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
 
-    public static string CONNECTION_STRING {
-        get { return string.Format("Server={0};Database={1};Uid={2};Pwd={3}", server, database, user, pwd); }
+    public static DBConfig GetInstance() {
+        return dbConfig;
+    }
+
+    private DBConfig() {
+        builder.Server = server;
+        builder.UserID = user;
+        builder.Password = pwd;
+        builder.Database = database;
+    }
+
+    public string GetConnectionString {
+        get{ return builder.ToString(); }
     }
 }

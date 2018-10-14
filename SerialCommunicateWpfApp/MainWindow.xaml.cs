@@ -1,24 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO.Ports;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
-using System.Threading;
-using System.Data.SqlClient;
-using System.Data;
-using System.Data.SqlTypes;
 using SerialCommunicateWpfApp.Controller;
 
 namespace SerialCommunicateWpfApp {
@@ -27,7 +8,7 @@ namespace SerialCommunicateWpfApp {
         public MainWindow() {
             InitializeComponent();
             InitView();
-            controller.RenderOfList = RenderOfSerialData;
+            controller.renderOfList = RenderOfSerialData;
         }
 
         private void InitView() {

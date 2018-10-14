@@ -8,11 +8,7 @@ using SerialCommunicateWpfApp.Models;
 namespace SerialCommunicateWpfApp.Controller {
     class MainController {
         private MainModel model = new MainModel();
-        private Action<string> renderOfList;
-        public Action<string> RenderOfList {
-            set { renderOfList = value; }
-            get { return renderOfList; }
-        }
+        public Action<string> renderOfList { get; set; }
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);

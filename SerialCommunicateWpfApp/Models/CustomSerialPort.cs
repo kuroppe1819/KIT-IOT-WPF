@@ -26,11 +26,13 @@ namespace SerialCommunicateWpfApp.Models {
         }
 
         public byte[] ReadFrames() {
+            while (BytesToRead < 16) { } //バッファに16バイト以上のシリアルデータが蓄積されるまで待機する
             while (ReadByte() != 0xFF) { } //スタートビットを受信するまで調整する
-            int frameLength = ReadByte();
-            var buffer = new byte[frameLength]; //フレーム長を読み取る
+            int frameLength = ReadByte(); //フレーム長を読み取る
+            var buffer = new byte[frameLength]; 
             Read(buffer, 0, buffer.Length); //フレーム長とチェックサムに挟まれた分だけ読み取る
             int checksum = ReadByte(); //チェックサムを読み取る
+            int stopbit = ReadByte(); //ストップビットを読み取る
 
             if (checksum == CustomSerialPort.CalcChecksum(buffer)) {
                 return buffer;

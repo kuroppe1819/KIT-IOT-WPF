@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SerialCommunicateWpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="450">
+        Title="MainWindow" Height="430" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="214*"/>
@@ -16,15 +16,52 @@
             <ComboBoxItem Content="9600"/>
             <ComboBoxItem Content="115200"/>
         </ComboBox>
-        <ProgressBar x:Name="ProgressStatus" HorizontalAlignment="Left" Height="22" Margin="320,41,0,0" VerticalAlignment="Top" Width="95"/>
-        <GroupBox Header=" Recieve Data" HorizontalAlignment="Left" Height="213" Margin="20,87,0,0" VerticalAlignment="Top" Width="277">
-            <ListBox x:Name="ReadLineList" HorizontalAlignment="Left" Height="171" Margin="10,10,0,0" VerticalAlignment="Top" Width="244"/>
-        </GroupBox>
         <Label Content="Port Name" HorizontalAlignment="Left" Margin="20,15,0,0" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.78,0.577"/>
         <Label Content="Baund Rate" HorizontalAlignment="Left" Margin="167,15,0,0" VerticalAlignment="Top" Width="80"/>
-        <Label Content="Progress" HorizontalAlignment="Left" Margin="320,15,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button x:Name="OpenPortBtn" Content="Open Port" HorizontalAlignment="Left" Margin="320,102,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="OpenPortBtn_Click"/>
-        <Button x:Name="ClosePortBtn" Content="Close Port" HorizontalAlignment="Left" Margin="320,185,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="ClosePortBtn_Click"/>
-        <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="337,267,0,0" VerticalAlignment="Top" Width="63" Click="ExportBtn_Click"/>
+        <Button x:Name="OpenPortBtn" Content="Open Port" HorizontalAlignment="Left" Margin="309,41,0,0" VerticalAlignment="Top" Width="75" Height="34" Click="OpenPortBtn_Click"/>
+        <Button x:Name="ClosePortBtn" Content="Close Port" HorizontalAlignment="Left" Margin="400,41,0,0" VerticalAlignment="Top" Width="75" Height="34" Click="ClosePortBtn_Click" RenderTransformOrigin="0.907,-6.926"/>
+        <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="488,41,0,0" VerticalAlignment="Top" Width="75" Click="ExportBtn_Click" RenderTransformOrigin="0.882,-0.532" Height="34"/>
+        <GroupBox Header="Area0" HorizontalAlignment="Left" Height="86" Margin="59,98,0,0" VerticalAlignment="Top" Width="474">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+                <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
+                <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
+                <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
+                <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <TextBox Height="20" Canvas.Left="10" TextWrapping="Wrap" Text="2018/10/16 23:45:32" Canvas.Top="31" Width="120"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="26℃" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="60%" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="250lux" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" TextChanged="TextBox_TextChanged" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox Header="Area1" HorizontalAlignment="Left" Height="86" Margin="59,189,0,0" VerticalAlignment="Top" Width="474">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+                <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
+                <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
+                <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
+                <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <TextBox Height="20" Canvas.Left="10" TextWrapping="Wrap" Text="2018/10/16 23:45:32" Canvas.Top="31" Width="120"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="26℃" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="60%" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="250lux" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" TextChanged="TextBox_TextChanged" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox Header="Area2" HorizontalAlignment="Left" Height="86" Margin="59,280,0,0" VerticalAlignment="Top" Width="474">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+                <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
+                <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
+                <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
+                <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <TextBox Height="20" Canvas.Left="10" TextWrapping="Wrap" Text="2018/10/16 23:45:32" Canvas.Top="31" Width="120"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="26℃" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="60%" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" TextChanged="TextBox_TextChanged"/>
+                <TextBox HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="250lux" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" TextChanged="TextBox_TextChanged" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+            </Canvas>
+        </GroupBox>
     </Grid>
 </Window>

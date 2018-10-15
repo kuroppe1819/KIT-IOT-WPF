@@ -26,19 +26,19 @@ public sealed class DatabaseQuery {
 
     public string InsertToCurrentTable(Device device) {
         return string.Format(
-            "insert into current (area, datetime, current_switch) values ({0}, {1}, {2})",
+            "insert into current (area, datetime, current_switch) values ({0}, '{1}', {2})",
             device.AreaCode, device.DateTime, device.CurrentSwitch);
     }
 
     public string InsertToEnvironmentTable(Device device) {
         return string.Format(
-            "insert into environment (area, datetime, temperature, humidity, illumination) values ({0}, {1}, {2}, {3}, {4})",
+            "insert into environment (area, datetime, temperature, humidity, illumination) values ({0}, '{1}', {2}, {3}, {4})",
             device.AreaCode, device.DateTime, device.Temperature, device.Humidity, device.Illumination);
     }
 
     public string InsertToDustTable(Device device) {
         return string.Format(
-            "insert into dust (area, datetime, dust) values ({0}, {1}, {2})",
+            "insert into dust (area, datetime, dust) values ({0}, '{1}', {2})",
             device.AreaCode, device.DateTime, device.Dust);
     }
 }

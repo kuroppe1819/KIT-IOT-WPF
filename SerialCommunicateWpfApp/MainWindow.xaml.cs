@@ -28,34 +28,6 @@ namespace SerialCommunicateWpfApp {
             }));
         }
 
-        //    private void InsertOf(byte[] buffer)
-        //    {
-        //        if (sqlConnection.State == ConnectionState.Closed)
-        //        {
-        //            sqlConnection.Open();
-        //        }
-
-        //        try
-        //        {
-        //            var sqlCount = new SqlCommand("SELECT COUNT(*) FROM SENSORS", sqlConnection);
-        //            int count = (int)sqlCount.ExecuteScalar();
-        //            var sqlInsert = new SqlCommand("INSERT INTO SENSORS (Id, [Area], [DateTime], [Current], [Temperature], [Humidity], [Illumination], [Dust]) VALUES (@Id, @Area, @DateTime, @Current, @Temperature, @Humidity, @Illumination, @Dust)", sqlConnection);
-        //            sqlInsert.Parameters.AddWithValue("@Id", count);
-        //            sqlInsert.Parameters.AddWithValue("@Area", (buffer[2] << 8) + buffer[3]);
-        //            sqlInsert.Parameters.AddWithValue("@DateTime", new DateTime(int.Parse($"20{buffer[4]}"), buffer[5], buffer[6], buffer[7], buffer[8], buffer[9]));
-        //            sqlInsert.Parameters.AddWithValue("@Current", (buffer[10] == 0xFE) ? SqlByte.Null : buffer[10]);
-        //            sqlInsert.Parameters.AddWithValue("@Temperature", (buffer[11] == 0xFE) ? SqlByte.Null : buffer[11]);
-        //            sqlInsert.Parameters.AddWithValue("@Humidity", (buffer[12] == 0xFE) ? SqlByte.Null : buffer[12]);
-        //            sqlInsert.Parameters.AddWithValue("@Illumination", (buffer[13] == 0xFE) ? SqlByte.Null : buffer[13]);
-        //            sqlInsert.Parameters.AddWithValue("@Dust", (buffer[14] == 0xFE) ? SqlByte.Null : buffer[14]);
-        //            sqlInsert.ExecuteNonQuery();
-        //        }
-        //        finally
-        //        {
-        //            sqlConnection.Close();
-        //        }
-        //    }
-
         private void OpenPortBtn_Click(object sender, RoutedEventArgs e) {
             try {
                 controller.OpenPort(PortNameBox.Text, BaundRateBox.Text);

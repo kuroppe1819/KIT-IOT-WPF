@@ -52,7 +52,6 @@ namespace SerialCommunicateWpfApp.Models {
                 default:
                     throw new InvalidChildIdException();
             }
-
             try {
                 connection.Open();
                 await Task.Run(() => command.ExecuteNonQuery());

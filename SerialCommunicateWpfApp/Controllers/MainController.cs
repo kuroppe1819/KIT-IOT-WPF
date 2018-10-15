@@ -13,13 +13,6 @@ namespace SerialCommunicateWpfApp.Controller {
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);
-            //TODO: insertのテスト
-            Device device = new Device();
-            device.AreaCode = 0;
-            device.ChildId = DeviceChildId.CURRENT;
-            device.DateTime = new DateTime(2018, 10, 15, 12, 12, 24);
-            device.CurrentSwitch = true;
-            model.InsertOf(device);
         }
 
         public List<string> GetPortNameList() {
@@ -47,6 +40,7 @@ namespace SerialCommunicateWpfApp.Controller {
                 //親機に再送処理を通知する場合はここに処理を書く
                 return;
             }
+            model.InsertOf(CreateDevice(readBytes));
 
             if (RenderOfList != null && readBytes != null) {
                 string readLine = readBytes[0].ToString();
@@ -55,6 +49,29 @@ namespace SerialCommunicateWpfApp.Controller {
                 }
                 RenderOfList(readLine);
             }
+        }
+
+        private Device CreateDevice(byte[] buffer) {
+            Device device = new Device();
+            device.ChildId = buffer[0];
+            device.AreaCode = (buffer[1] << 8) + buffer[2];
+            device.DateTime = new DateTime(int.Parse($"20{buffer[3]}"), buffer[4], buffer[5], buffer[6], buffer[7], buffer[8]);
+            switch (device.ChildId) {
+                case DeviceChildId.CURRENT:
+                    device.CurrentSwitch = (buffer[9] == 1) ? true : false;
+                    break;
+                case DeviceChildId.ENVIRONMENT:
+                    device.Temperature = buffer[9];
+                    device.Humidity = buffer[10];
+                    device.Illumination = buffer[11];
+                    break;
+                case DeviceChildId.DUST:
+                    device.Dust = buffer[9];
+                    break;
+                default:
+                    break;
+            }
+            return device;
         }
     }
 }

@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO.Ports;
+using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using SerialCommunicateWpfApp.Entity;
 
 namespace SerialCommunicateWpfApp.Models {
     class MainModel {
         private CustomSerialPort serialPort = new CustomSerialPort();
+        private DatabaseQuery dbQuery = DatabaseQuery.GetInstance();
+        private MySqlConnection connection = new MySqlConnection();
+        private MySqlCommand command = new MySqlCommand();
+
+        public MainModel() {
+            connection.ConnectionString = dbQuery.Connection;
+            command.Connection = connection;
+        }
 
         public void SetDataReceiveHandler(Action<object, SerialDataReceivedEventArgs> handler) {
             serialPort.SetDataReceiveHandler(handler);
@@ -28,6 +36,30 @@ namespace SerialCommunicateWpfApp.Models {
 
         public byte[] ReadFrames() {
             return serialPort.ReadFrames();
+        }
+
+        public async void InsertOf(Device device) {
+            switch (device.ChildId) {
+                case DeviceChildId.CURRENT:
+                    command.CommandText = dbQuery.InsertToCurrentTable(device);
+                    break;
+                case DeviceChildId.ENVIRONMENT:
+                    command.CommandText = dbQuery.InsertToEnvironmentTable(device);
+                    break;
+                case DeviceChildId.DUST:
+                    command.CommandText = dbQuery.InsertToDustTable(device);
+                    break;
+                default:
+                    throw new InvalidChildIdException();
+            }
+
+            try {
+                connection.Open();
+                await Task.Run(() => command.ExecuteNonQuery());
+                connection.Close();
+            } catch (MySqlException ex) {
+                throw ex;
+            }
         }
     }
 }

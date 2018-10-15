@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SerialCommunicateWpfApp.Entity;
 using SerialCommunicateWpfApp.Models;
 
 namespace SerialCommunicateWpfApp.Controller {
@@ -12,6 +13,13 @@ namespace SerialCommunicateWpfApp.Controller {
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);
+            //TODO: insertのテスト
+            Device device = new Device();
+            device.AreaCode = 0;
+            device.ChildId = DeviceChildId.CURRENT;
+            device.DateTime = new DateTime(2018, 10, 15, 12, 12, 24);
+            device.CurrentSwitch = true;
+            model.InsertOf(device);
         }
 
         public List<string> GetPortNameList() {

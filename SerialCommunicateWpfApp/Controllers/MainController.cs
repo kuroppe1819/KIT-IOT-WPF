@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SerialCommunicateWpfApp.Entity;
 using SerialCommunicateWpfApp.Models;
@@ -9,7 +8,7 @@ using SerialCommunicateWpfApp.Models;
 namespace SerialCommunicateWpfApp.Controller {
     class MainController {
         private MainModel model = new MainModel();
-        public Action<string> RenderOfList { get; set; }
+        public Action<Device> RenderOfSerialData { get; set; }
 
         public MainController() {
             model.SetDataReceiveHandler(DataReceivedHandler);
@@ -40,21 +39,22 @@ namespace SerialCommunicateWpfApp.Controller {
                 //親機に再送処理を通知する場合はここに処理を書く
                 return;
             }
-            model.InsertOf(CreateDevice(readBytes));
 
-            if (RenderOfList != null && readBytes != null) {
-                string readLine = readBytes[0].ToString();
-                for (int i = 1; i < readBytes.Length; i++) {
-                    readLine += " " + readBytes[i].ToString();
+            if (RenderOfSerialData != null && readBytes != null) {
+                Device device = CreateDevice(readBytes);
+                try {
+                    model.InsertOf(device);
+                    RenderOfSerialData(device);
+                } catch (Exception ex) {
+                    Console.WriteLine(ex);
                 }
-                RenderOfList(readLine);
             }
         }
 
         private Device CreateDevice(byte[] buffer) {
             Device device = new Device();
             device.ChildId = buffer[0];
-            device.AreaCode = (buffer[1] << 8) + buffer[2];
+            device.AreaCode = (buffer[1] << 8) + buffer[2]; //上位桁と下位桁を結合
             device.DateTime = new DateTime(int.Parse($"20{buffer[3]}"), buffer[4], buffer[5], buffer[6], buffer[7], buffer[8]);
             switch (device.ChildId) {
                 case DeviceChildId.CURRENT:

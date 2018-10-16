@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using SerialCommunicateWpfApp.Controller;
+using SerialCommunicateWpfApp.Entity;
 
 namespace SerialCommunicateWpfApp {
     public partial class MainWindow : System.Windows.Window {
@@ -8,7 +10,7 @@ namespace SerialCommunicateWpfApp {
         public MainWindow() {
             InitializeComponent();
             InitView();
-            controller.RenderOfList = RenderOfSerialData;
+            controller.RenderOfSerialData = RenderOfSerialData;
         }
 
         private void InitView() {
@@ -21,11 +23,55 @@ namespace SerialCommunicateWpfApp {
             ClosePortBtn.IsEnabled = !enabled;
         }
 
-        private void RenderOfSerialData(string readLine) {
-            ReadLineList.Dispatcher.Invoke(new Action(() => {
-                ReadLineList.Items.Add(readLine);
-                ReadLineList.Items.Refresh();
+        private void RenderOfSerialData(Device device) {
+            this.Dispatcher.Invoke(new Action(() => {
+                switch (device.AreaCode) {
+                    case 0:
+                        RenderIntoGroupBox(GroupArea0, device);
+                        break;
+                    case 1:
+                        RenderIntoGroupBox(GroupArea1, device);
+                        break;
+                    case 2:
+                        RenderIntoGroupBox(GroupArea2, device);
+                        break;
+                    default:
+                        break;
+                }
             }));
+        }
+
+        private void RenderIntoGroupBox(GroupBox groupBox, Device device) {
+            foreach (Control content in ((Canvas)groupBox.Content).Children) {
+                if (content.Name.Length == 0) {
+                    continue;
+                }
+                string contentName = content.Name.Substring(0, content.Name.Length - 1); //コントロール名から番号を削除する
+                switch (contentName) {
+                    case "DateTimeBox":
+                        TextBox datetimeBox = content.FindName(content.Name) as TextBox;
+                        datetimeBox.Text = device.DateTime.ToLongTimeString();
+                        break;
+                    case "TempBox":
+                        TextBox tempBox = content.FindName(content.Name) as TextBox;
+                        tempBox.Text = device.Temperature.ToString() + "℃";
+                        break;
+                    case "HumidityBox":
+                        TextBox humidityBox = content.FindName(content.Name) as TextBox;
+                        humidityBox.Text = device.Humidity.ToString() + "%";
+                        break;
+                    case "IlluminationBox":
+                        TextBox illuminationBox = content.FindName(content.Name) as TextBox;
+                        illuminationBox.Text = device.Illumination.ToString() + "lux";
+                        break;
+                    case "Power":
+                        ProgressBar powerProgress = content.FindName(content.Name) as ProgressBar;
+                        powerProgress.Value = (device.CurrentSwitch) ? 100 : 0;
+                        break;
+                    default:
+                        break;
+                }
+            };
         }
 
         private void OpenPortBtn_Click(object sender, RoutedEventArgs e) {

@@ -14,6 +14,21 @@ namespace SerialCommunicateWpfApp.Controller {
             model.SetDataReceiveHandler(DataReceivedHandler);
         }
 
+        public string ExcludeEndNumber(string str) {
+            if (str.Length == 0) {
+                return str;
+            }
+
+            Int32 number;
+            int endIndex = str.Length - 1;
+            if (Int32.TryParse(str.Substring(endIndex), out number)) { //末尾の文字が数値に変換できるかチェックする
+                string subString = str.Substring(0, endIndex); //コントロール名から番号を削除する
+                return ExcludeEndNumber(subString);
+            } else {
+                return str;
+            }
+        }
+
         public List<string> GetPortNameList() {
             return model.GetSerialPortNames().ToList();
         }

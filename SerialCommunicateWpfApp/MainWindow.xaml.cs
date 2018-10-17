@@ -68,6 +68,7 @@ namespace SerialCommunicateWpfApp {
                 controller.OpenPort(PortNameBox.Text, BaundRateBox.Text);
                 OpenBtnEnabled(false);
             } catch (Exception ex) {
+                Console.WriteLine(ex.StackTrace);
                 MessageBox.Show("使用するポートと通信速度を設定してください");
             }
         }
@@ -77,6 +78,8 @@ namespace SerialCommunicateWpfApp {
                 controller.ClosePort();
                 OpenBtnEnabled(true);
             } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 MessageBox.Show(ex.Message);
             }
         }

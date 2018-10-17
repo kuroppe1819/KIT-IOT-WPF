@@ -50,7 +50,8 @@ namespace SerialCommunicateWpfApp.Controller {
             try {
                 readBytes = model.ReadFrames();
             } catch (Exception ex) {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 //親機に再送処理を通知する場合はここに処理を書く
                 return;
             }
@@ -61,7 +62,8 @@ namespace SerialCommunicateWpfApp.Controller {
                     model.InsertOf(device);
                     RenderOfSerialData(device);
                 } catch (Exception ex) {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
                 }
             }
         }

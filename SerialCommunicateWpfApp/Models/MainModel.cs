@@ -51,7 +51,7 @@ namespace SerialCommunicateWpfApp.Models {
             }
         }
 
-        public async void InsertOf(Device device) {
+        public void InsertOf(Device device) {
             switch (device.ChildId) {
                 case DeviceChildId.CURRENT:
                     command.CommandText = dbQuery.InsertToCurrentTable(device);
@@ -66,7 +66,9 @@ namespace SerialCommunicateWpfApp.Models {
                     throw new InvalidChildIdException();
             }
             try {
-                //await Task.Run(() => command.ExecuteNonQuery());
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
             } catch (MySqlException ex) {
                 throw ex;
             }

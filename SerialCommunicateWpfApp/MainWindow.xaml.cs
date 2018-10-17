@@ -25,47 +25,36 @@ namespace SerialCommunicateWpfApp {
 
         private void RenderOfSerialData(Device device) {
             this.Dispatcher.Invoke(new Action(() => {
-                switch (device.AreaCode) {
-                    case 0:
-                        RenderIntoGroupBox(GroupArea0, device);
-                        break;
-                    case 1:
-                        RenderIntoGroupBox(GroupArea1, device);
-                        break;
-                    case 2:
-                        RenderIntoGroupBox(GroupArea2, device);
-                        break;
-                    default:
-                        break;
+                foreach (Control control in LayoutRoot.Children) {
+                    if (control is GroupBox && controller.ExcludeEndNumber(control.Name) == "GroupArea") {
+                        GroupBox groupBox = control.FindName("GroupArea" + device.AreaCode.ToString()) as GroupBox;
+                        RenderIntoGroupBox(groupBox, device);
+                    }
                 }
             }));
         }
 
         private void RenderIntoGroupBox(GroupBox groupBox, Device device) {
-            foreach (Control content in ((Canvas)groupBox.Content).Children) {
-                if (content.Name.Length == 0) {
-                    continue;
-                }
-                string contentName = content.Name.Substring(0, content.Name.Length - 1); //コントロール名から番号を削除する
-                switch (contentName) {
+            foreach (Control control in ((Canvas)groupBox.Content).Children) {   
+                switch (controller.ExcludeEndNumber(control.Name)) {
                     case "DateTimeBox":
-                        TextBox datetimeBox = content.FindName(content.Name) as TextBox;
+                        TextBox datetimeBox = control.FindName(control.Name) as TextBox;
                         datetimeBox.Text = device.DateTime.ToLongTimeString();
                         break;
                     case "TempBox":
-                        TextBox tempBox = content.FindName(content.Name) as TextBox;
+                        TextBox tempBox = control.FindName(control.Name) as TextBox;
                         tempBox.Text = device.Temperature.ToString() + "℃";
                         break;
                     case "HumidityBox":
-                        TextBox humidityBox = content.FindName(content.Name) as TextBox;
+                        TextBox humidityBox = control.FindName(control.Name) as TextBox;
                         humidityBox.Text = device.Humidity.ToString() + "%";
                         break;
                     case "IlluminationBox":
-                        TextBox illuminationBox = content.FindName(content.Name) as TextBox;
+                        TextBox illuminationBox = control.FindName(control.Name) as TextBox;
                         illuminationBox.Text = device.Illumination.ToString() + "lux";
                         break;
                     case "Power":
-                        ProgressBar powerProgress = content.FindName(content.Name) as ProgressBar;
+                        ProgressBar powerProgress = control.FindName(control.Name) as ProgressBar;
                         powerProgress.Value = (device.CurrentSwitch) ? 100 : 0;
                         break;
                     default:

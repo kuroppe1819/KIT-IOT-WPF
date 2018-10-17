@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SerialCommunicateWpfApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="420" Width="600">
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="214*"/>
             <ColumnDefinition Width="7*"/>

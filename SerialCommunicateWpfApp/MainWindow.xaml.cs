@@ -84,7 +84,12 @@ namespace SerialCommunicateWpfApp {
             }
         }
 
-        private void ExportBtn_Click(object sender, RoutedEventArgs e) {
+        private async void ExportBtn_Click(object sender, RoutedEventArgs e) {
+            if (ClosePortBtn.IsEnabled) {
+                //シリアルポートが開いている場合
+                ClosePortBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, ClosePortBtn)); //CloseButtonのクリックイベントを発生させる
+            }
+            await controller.ExportSerialDataAsync();
             //        var sqlConnection = new SqlConnection(localDbPath);
             //        try
             //        {

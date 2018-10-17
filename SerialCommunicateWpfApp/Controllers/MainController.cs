@@ -91,6 +91,14 @@ namespace SerialCommunicateWpfApp.Controller {
             return device;
         }
 
+        public Task ExportSerialDataAsync() {
+            //SQL実行中にクローズしないようにするため遅延処理を行う
+            return Task.Run(async () => {
+                await Task.Delay(1000); //1000ms待機
+                model.ExportToWorksheet();
+            });
+        }
+
         public void WindowClosing() {
             model.CloseSerialPort();
             //SQL実行中にクローズしないようにするため遅延処理を行う

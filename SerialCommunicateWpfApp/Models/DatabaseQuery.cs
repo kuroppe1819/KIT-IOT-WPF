@@ -41,4 +41,8 @@ public sealed class DatabaseQuery {
             "insert into dust (area, datetime, dust) values ({0}, '{1}', {2})",
             device.AreaCode, device.DateTime, device.Dust);
     }
+
+    public string SelectFrom(string table, string column) {
+        return string.Format("select {0} from {1}", (column == "all") ? "*" : column, table);
+    }
 }

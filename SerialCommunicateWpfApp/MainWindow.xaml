@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SerialCommunicateWpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="420" Width="600">
+        Title="MainWindow" Height="420" Width="600"
+        Closing="WindowClosing">
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="214*"/>

@@ -126,5 +126,9 @@ namespace SerialCommunicateWpfApp {
             //            sqlConnection.Close();
             //        }
         }
+
+        protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
+            controller.WindowClosing();
+        }
     }
 }

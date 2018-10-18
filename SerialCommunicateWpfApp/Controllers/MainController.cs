@@ -95,7 +95,12 @@ namespace SerialCommunicateWpfApp.Controller {
             //SQL実行中にクローズしないようにするため遅延処理を行う
             return Task.Run(async () => {
                 await Task.Delay(1000); //1000ms待機
-                model.ExportToWorksheet();
+                try {
+                    model.ExportToWorksheet();
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                }
             });
         }
 

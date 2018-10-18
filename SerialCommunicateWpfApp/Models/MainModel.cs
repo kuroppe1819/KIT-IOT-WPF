@@ -88,8 +88,8 @@ namespace SerialCommunicateWpfApp.Models {
 
         public void ExportToWorksheet() {
             Application excelApp = new Application();
-            excelApp.Visible = true; //書き出すときにExcelを表示しない
-            excelApp.WindowState = XlWindowState.xlMaximized; //windowを最大化する
+            excelApp.Visible = false; //書き出すときにExcelを表示しない
+            //excelApp.WindowState = XlWindowState.xlMaximized; //windowを最大化する
             Workbook workbook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet); //ワークシートが追加されているworkbookを作成
             workbook.Worksheets.Add(Count: DatabaseTable.Names.Length - 1); //ワークシートの追加
             foreach (var table in DatabaseTable.Names.Select((name, index) => new { name, index })) {

@@ -77,7 +77,7 @@ namespace SerialCommunicateWpfApp.Models {
         }
 
         public MySqlDataReader SelectFrom(string tableName, string column) {
-            command.CommandText = dbQuery.SelectFrom(tableName, "all");
+            command.CommandText = dbQuery.SelectFrom(tableName, column);
             try {
                 connection.Open();
                 return command.ExecuteReader();

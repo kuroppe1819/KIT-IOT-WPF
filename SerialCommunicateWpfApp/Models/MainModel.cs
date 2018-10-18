@@ -91,8 +91,10 @@ namespace SerialCommunicateWpfApp.Models {
             excelApp.Visible = true; //書き出すときにExcelを表示しない
             excelApp.WindowState = XlWindowState.xlMaximized; //windowを最大化する
             Workbook workbook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet); //ワークシートが追加されているworkbookを作成
+            workbook.Worksheets.Add(Count: DatabaseTable.Names.Length - 1); //ワークシートの追加
             foreach (var table in DatabaseTable.Names.Select((name, index) => new { name, index })) {
                 Worksheet worksheet = workbook.Worksheets[table.index + 1]; //シートの番号
+                worksheet.Name = table.name; // シートの名前を対応するテーブル名に変更する
                 try {
                     MySqlDataReader reader = SelectFrom(table.name, DatabaseTable.Column.ALL);
                     var columns = Enumerable.Range('A', reader.FieldCount)
@@ -112,14 +114,13 @@ namespace SerialCommunicateWpfApp.Models {
                         row++;
                     }
                     reader.Close();
-                    //TODO: 保存先をAppData以下にする？
-                    workbook.SaveAs(@"C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorData.xlsx");
                 } catch (Exception ex) {
                     throw ex;
                 } finally {
                     connection.Close();
-                }
             }
+            //TODO: 保存先をAppData以下にする？
+            workbook.SaveAs(@"C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorData.xlsx");
         }
     }
 }

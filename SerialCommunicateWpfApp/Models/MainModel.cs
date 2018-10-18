@@ -120,8 +120,7 @@ namespace SerialCommunicateWpfApp.Models {
                     CloseDatabase();
                 }
             }
-            //TODO: 保存先をAppData以下にする？
-            workbook.SaveAs(@"C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorData.xlsx");
+            workbook.SaveAs(@"C:\Users\Public\KobayashiIotSensors.xlsx");
         }
     }
 }

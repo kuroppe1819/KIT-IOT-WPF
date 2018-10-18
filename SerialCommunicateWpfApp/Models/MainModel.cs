@@ -72,7 +72,7 @@ namespace SerialCommunicateWpfApp.Models {
             } catch (MySqlException ex) {
                 throw ex;
             } finally {
-                connection.Close();
+                CloseDatabase();
             }
         }
 
@@ -117,7 +117,8 @@ namespace SerialCommunicateWpfApp.Models {
                 } catch (Exception ex) {
                     throw ex;
                 } finally {
-                    connection.Close();
+                    CloseDatabase();
+                }
             }
             //TODO: 保存先をAppData以下にする？
             workbook.SaveAs(@"C:\Users\atsusuke\WorkSpace\source\repos\SerialCommunicateWpfApp\SerialCommunicateWpfApp\SensorData.xlsx");

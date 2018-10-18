@@ -85,13 +85,16 @@ namespace SerialCommunicateWpfApp {
         }
 
         private async void ExportBtn_Click(object sender, RoutedEventArgs e) {
-            ExportBtn.IsEnabled = false;
+            this.IsEnabled = false;
             if (ClosePortBtn.IsEnabled) {
                 //シリアルポートが開いている場合
                 ClosePortBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, ClosePortBtn)); //CloseButtonのクリックイベントを発生させる
             }
+            var exportingWindow = new ExportingWindow();
+            exportingWindow.Show();
             await controller.ExportSerialDataAsync();
-            ExportBtn.IsEnabled = true;
+            this.IsEnabled = true;
+            exportingWindow.Close();
         }
 
         protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {

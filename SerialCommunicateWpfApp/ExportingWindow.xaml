@@ -1,0 +1,14 @@
+﻿<Window x:Class="SerialCommunicateWpfApp.ExportingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialCommunicateWpfApp"
+        mc:Ignorable="d"
+        Title="ExportingWindow" Height="150" Width="300">
+    <Grid>
+        <ProgressBar Height="22" Margin="26,42,27,0" VerticalAlignment="Top" IsIndeterminate="True"/>
+        <Button Content="キャンセル" Margin="108,77,109,0" VerticalAlignment="Top"/>
+        <Label Content="Excelに書き出し中..." HorizontalContentAlignment="Center"  FontSize="13" Margin="76,10,76,0" VerticalAlignment="Top" RenderTransformOrigin="-0.057,0.542"/>
+    </Grid>
+</Window>

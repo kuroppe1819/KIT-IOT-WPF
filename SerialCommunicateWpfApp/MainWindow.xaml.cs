@@ -57,6 +57,11 @@ namespace SerialCommunicateWpfApp {
                         int illumination = device.Illumination;
                         illuminationBox.Text = (illumination == Device.EMPTY) ? "" : $"{illumination.ToString()}lux";
                         break;
+                    case "DustBox":
+                        TextBox dustBox = control.FindName(control.Name) as TextBox;
+                        int dust = device.Dust;
+                        dustBox.Text = (dust == Device.EMPTY) ? "" : dust.ToString();
+                        break;
                     case "Power":
                         ProgressBar powerProgress = control.FindName(control.Name) as ProgressBar;
                         powerProgress.Value = (device.CurrentSwitch) ? 100 : 0;

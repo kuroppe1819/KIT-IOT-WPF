@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SerialCommunicateWpfApp.Entity;
+using SerialCommunicateWpfApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SerialCommunicateWpfApp.Entity;
-using SerialCommunicateWpfApp.Models;
 
 namespace SerialCommunicateWpfApp.Controller {
     class MainController {
@@ -97,7 +97,7 @@ namespace SerialCommunicateWpfApp.Controller {
                 await Task.Delay(1000); //1000ms待機
                 try {
                     model.ExportToWorksheet();
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     Console.WriteLine(ex.Message);
                     Console.WriteLine(ex.StackTrace);
                 }

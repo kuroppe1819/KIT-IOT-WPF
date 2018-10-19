@@ -22,46 +22,52 @@
         <Button x:Name="OpenPortBtn" Content="Open Port" HorizontalAlignment="Left" Margin="309,41,0,0" VerticalAlignment="Top" Width="75" Height="34" Click="OpenPortBtn_Click"/>
         <Button x:Name="ClosePortBtn" Content="Close Port" HorizontalAlignment="Left" Margin="400,41,0,0" VerticalAlignment="Top" Width="75" Height="34" Click="ClosePortBtn_Click" RenderTransformOrigin="0.907,-6.926"/>
         <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="488,41,0,0" VerticalAlignment="Top" Width="75" Click="ExportBtn_Click" RenderTransformOrigin="0.882,-0.532" Height="34"/>
-        <GroupBox x:Name="GroupArea0" Header="Area0" HorizontalAlignment="Left" Height="86" Margin="59,88,0,0" VerticalAlignment="Top" Width="474">
-            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+        <GroupBox x:Name="GroupArea0" Header="Area0" HorizontalAlignment="Left" Height="86" Margin="20,88,0,0" VerticalAlignment="Top" Width="543">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="515">
                 <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
                 <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
                 <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
                 <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
-                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <Label Content="粉塵" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="369" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="425"/>
                 <TextBox x:Name="DateTimeBox0" IsReadOnly="True" Height="20" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="31" Width="120"/>
                 <TextBox x:Name="TempBox0" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" />
                 <TextBox x:Name="HumidityBox0" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" />
                 <TextBox x:Name="IlluminationBox0" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
-                <ProgressBar x:Name="Power0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+                <TextBox x:Name="DustBox0" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="361" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar x:Name="Power0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="438" Canvas.Top="31"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="GroupArea1" Header="Area1" HorizontalAlignment="Left" Height="86" Margin="59,179,0,0" VerticalAlignment="Top" Width="474">
-            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+        <GroupBox x:Name="GroupArea1" Header="Area0" HorizontalAlignment="Left" Height="86" Margin="20,179,0,0" VerticalAlignment="Top" Width="543">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="515">
                 <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
                 <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
                 <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
                 <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
-                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <Label Content="粉塵" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="369" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="425"/>
                 <TextBox x:Name="DateTimeBox1" IsReadOnly="True" Height="20" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="31" Width="120"/>
                 <TextBox x:Name="TempBox1" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" />
                 <TextBox x:Name="HumidityBox1" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" />
                 <TextBox x:Name="IlluminationBox1" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
-                <ProgressBar x:Name="Power1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+                <TextBox x:Name="DustBox1" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="361" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar x:Name="Power1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="438" Canvas.Top="31"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="GroupArea2" Header="Area2" HorizontalAlignment="Left" Height="86" Margin="59,270,0,0" VerticalAlignment="Top" Width="474">
-            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="450">
+        <GroupBox x:Name="GroupArea2" Header="Area0" HorizontalAlignment="Left" Height="86" Margin="20,270,0,0" VerticalAlignment="Top" Width="543">
+            <Canvas HorizontalAlignment="Left" Margin="10,0,0,3" Width="515">
                 <Label Content="測定時刻" Canvas.Left="39" RenderTransformOrigin="0.546,-0.385"/>
                 <Label Content="温度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="160"/>
                 <Label Content="湿度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="224" RenderTransformOrigin="0.845,0.385"/>
                 <Label Content="照度" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="293" RenderTransformOrigin="1.989,0.711"/>
-                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="358"/>
+                <Label Content="粉塵" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="369" RenderTransformOrigin="1.989,0.711"/>
+                <Label Content="溶接機の電源" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="425"/>
                 <TextBox x:Name="DateTimeBox2" IsReadOnly="True" Height="20" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="31" Width="120"/>
                 <TextBox x:Name="TempBox2" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="160" Canvas.Top="31" />
                 <TextBox x:Name="HumidityBox2" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Canvas.Left="224" Canvas.Top="31" />
                 <TextBox x:Name="IlluminationBox2" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="285" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
-                <ProgressBar x:Name="Power2" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="370" Canvas.Top="31"/>
+                <TextBox x:Name="DustBox2" IsReadOnly="True" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Canvas.Left="361" Canvas.Top="31" RenderTransformOrigin="1.109,0.742"/>
+                <ProgressBar x:Name="Power2" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="56" Canvas.Left="438" Canvas.Top="31"/>
             </Canvas>
         </GroupBox>
     </Grid>

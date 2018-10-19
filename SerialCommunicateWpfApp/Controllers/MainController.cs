@@ -104,6 +104,10 @@ namespace SerialCommunicateWpfApp.Controller {
             });
         }
 
+        public void CancelExport() {
+            model.Canceling = true;
+        }
+
         public void WindowClosing() {
             model.CloseSerialPort();
             //SQL実行中にクローズしないようにするため遅延処理を行う

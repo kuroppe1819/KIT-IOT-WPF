@@ -7,6 +7,7 @@ using SerialCommunicateWpfApp.Entity;
 namespace SerialCommunicateWpfApp {
     public partial class MainWindow : System.Windows.Window {
         MainController controller = new MainController();
+
         public MainWindow() {
             InitializeComponent();
             InitView();
@@ -35,7 +36,7 @@ namespace SerialCommunicateWpfApp {
         }
 
         private void RenderIntoGroupBox(GroupBox groupBox, Device device) {
-            foreach (Control control in ((Canvas)groupBox.Content).Children) {   
+            foreach (Control control in ((Canvas)groupBox.Content).Children) {
                 switch (controller.ExcludeEndNumber(control.Name)) {
                     case "DateTimeBox":
                         TextBox datetimeBox = control.FindName(control.Name) as TextBox;
@@ -91,10 +92,16 @@ namespace SerialCommunicateWpfApp {
                 ClosePortBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, ClosePortBtn)); //CloseButtonのクリックイベントを発生させる
             }
             var exportingWindow = new ExportingWindow();
+            exportingWindow.CancelBtnClicked = CancelBtn_Click;
             exportingWindow.Show();
             await controller.ExportSerialDataAsync();
             this.IsEnabled = true;
             exportingWindow.Close();
+        }
+
+        private void CancelBtn_Click() {
+            controller.CancelExport();
+            this.IsEnabled = true;
         }
 
         protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {

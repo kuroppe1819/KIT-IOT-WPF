@@ -12,6 +12,7 @@ namespace SerialCommunicateWpfApp.Models {
         private DatabaseQuery dbQuery = DatabaseQuery.GetInstance();
         private MySqlConnection connection = new MySqlConnection();
         private MySqlCommand command = new MySqlCommand();
+        public bool Canceling { get; set; }
 
         public MainModel() {
             connection.ConnectionString = dbQuery.Connection;
@@ -87,6 +88,7 @@ namespace SerialCommunicateWpfApp.Models {
         }
 
         public void ExportToWorksheet() {
+            Canceling = false;
             Application excelApp = new Application();
             excelApp.Visible = false; //書き出すときにExcelを表示しない
             Workbook workbook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet); //ワークシートが追加されているworkbookを作成
@@ -109,6 +111,9 @@ namespace SerialCommunicateWpfApp.Models {
                     while (reader.Read()) {
                         foreach (var colum in columns) {
                             worksheet.Range[$"{colum.alphabet}{row}"].Value = reader.GetString(colum.index);
+                        }
+                        if (Canceling) {
+                            return;
                         }
                         row++;
                     }

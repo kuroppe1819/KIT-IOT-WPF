@@ -12,7 +12,7 @@ namespace SerialCommunicateWpfApp.Models {
         private DatabaseQuery dbQuery = DatabaseQuery.GetInstance();
         private MySqlConnection connection = new MySqlConnection();
         private MySqlCommand command = new MySqlCommand();
-        public bool Canceling { get; set; }
+        public bool Canceling { get; set; } = false;
 
         public MainModel() {
             connection.ConnectionString = dbQuery.Connection;

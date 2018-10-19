@@ -44,15 +44,18 @@ namespace SerialCommunicateWpfApp {
                         break;
                     case "TempBox":
                         TextBox tempBox = control.FindName(control.Name) as TextBox;
-                        tempBox.Text = device.Temperature.ToString() + "℃";
+                        int temp = device.Temperature;
+                        tempBox.Text = (temp == Device.EMPTY) ? "" : $"{temp.ToString()}℃";
                         break;
                     case "HumidityBox":
                         TextBox humidityBox = control.FindName(control.Name) as TextBox;
-                        humidityBox.Text = device.Humidity.ToString() + "%";
+                        int humidity = device.Humidity;
+                        humidityBox.Text = (humidity == Device.EMPTY) ? "" : $"{humidity.ToString()}%";
                         break;
                     case "IlluminationBox":
                         TextBox illuminationBox = control.FindName(control.Name) as TextBox;
-                        illuminationBox.Text = device.Illumination.ToString() + "lux";
+                        int illumination = device.Illumination;
+                        illuminationBox.Text = (illumination == Device.EMPTY) ? "" : $"{illumination.ToString()}lux";
                         break;
                     case "Power":
                         ProgressBar powerProgress = control.FindName(control.Name) as ProgressBar;

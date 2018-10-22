@@ -46,7 +46,7 @@ namespace SerialCommunicateWpfApp.Controller {
         }
 
         private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
-            byte[] readBytes;
+            byte[] readBytes = null;
             try {
                 readBytes = model.ReadFrames();
             } catch (Exception ex) {

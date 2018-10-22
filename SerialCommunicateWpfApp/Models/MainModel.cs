@@ -23,6 +23,10 @@ namespace SerialCommunicateWpfApp.Models {
             serialPort.SetDataReceivedHandler(handler);
         }
 
+        public void DisposeReceivedHandler() {
+            serialPort.DisposeDataReceivedHandler();
+        }
+
         public string[] GetSerialPortNames() {
             return CustomSerialPort.GetPortNames();
         }

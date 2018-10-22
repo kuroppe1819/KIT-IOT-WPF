@@ -110,6 +110,7 @@ namespace SerialCommunicateWpfApp.Controller {
 
         public void WindowClosing() {
             model.CloseSerialPort();
+            model.DisposeReceivedHandler();
             //SQL実行中にクローズしないようにするため遅延処理を行う
             Task.Run(async () => {
                 await Task.Delay(3000); //3000ms待機

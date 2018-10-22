@@ -82,9 +82,10 @@ namespace SerialCommunicateWpfApp {
             }
         }
 
-        private void ClosePortBtn_Click(object sender, RoutedEventArgs e) {
+        private async void ClosePortBtn_Click(object sender, RoutedEventArgs e) {
             try {
-                controller.ClosePort();
+                ClosePortBtn.IsEnabled = false;
+                await controller.ClosePortAsync();
                 OpenBtnEnabled(true);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);

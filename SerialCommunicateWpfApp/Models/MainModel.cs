@@ -36,6 +36,7 @@ namespace SerialCommunicateWpfApp.Models {
         }
 
         public void CloseSerialPort() {
+            serialPort.DiscardInBuffer(); //バッファに蓄積されたデータを全て破棄
             if (serialPort.IsOpen) {
                 serialPort.Close();
             }
@@ -117,6 +118,8 @@ namespace SerialCommunicateWpfApp.Models {
                             worksheet.Range[$"{colum.alphabet}{row}"].Value = reader.GetString(colum.index);
                         }
                         if (Canceling) {
+                            workbook.Close(false);
+                            excelApp.Quit();
                             return;
                         }
                         row++;

@@ -117,6 +117,8 @@ namespace SerialCommunicateWpfApp.Models {
                             worksheet.Range[$"{colum.alphabet}{row}"].Value = reader.GetString(colum.index);
                         }
                         if (Canceling) {
+                            workbook.Close(false);
+                            excelApp.Quit();
                             return;
                         }
                         row++;

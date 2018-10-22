@@ -36,6 +36,7 @@ namespace SerialCommunicateWpfApp.Models {
         }
 
         public void CloseSerialPort() {
+            serialPort.DiscardInBuffer(); //バッファに蓄積されたデータを全て破棄
             if (serialPort.IsOpen) {
                 serialPort.Close();
             }

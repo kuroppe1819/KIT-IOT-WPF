@@ -41,12 +41,15 @@ namespace SerialCommunicateWpfApp.Controller {
             }
         }
 
-        public void ClosePort() {
-            model.CloseSerialPort();
+        public async Task ClosePortAsync() {
+            await Task.Run(() => {
+                model.CloseSerialPort();
+                model.CloseDatabase();
+            });
         }
 
         private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
-            byte[] readBytes;
+            byte[] readBytes = null;
             try {
                 readBytes = model.ReadFrames();
             } catch (Exception ex) {
@@ -91,9 +94,8 @@ namespace SerialCommunicateWpfApp.Controller {
             return device;
         }
 
-        public Task ExportSerialDataAsync() {
-            //SQL実行中にクローズしないようにするため遅延処理を行う
-            return Task.Run(async () => {
+        public async Task ExportSerialDataAsync() {
+            await Task.Run(async () => { //SQL実行中にクローズしないようにするため遅延処理を行う
                 await Task.Delay(1000); //1000ms待機
                 try {
                     model.ExportToWorksheet();
@@ -109,10 +111,9 @@ namespace SerialCommunicateWpfApp.Controller {
         }
 
         public void WindowClosing() {
-            model.CloseSerialPort();
-            model.DisposeReceivedHandler();
-            //SQL実行中にクローズしないようにするため遅延処理を行う
-            Task.Run(async () => {
+            Task.Run(async () => { //SQL実行中にクローズしないようにするため遅延処理を行う
+                model.CloseSerialPort();
+                model.DisposeReceivedHandler();
                 await Task.Delay(3000); //3000ms待機
                 model.CloseDatabase();
             });

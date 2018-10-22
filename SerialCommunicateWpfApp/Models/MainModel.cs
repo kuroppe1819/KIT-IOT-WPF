@@ -19,8 +19,12 @@ namespace SerialCommunicateWpfApp.Models {
             command.Connection = connection;
         }
 
-        public void SetDataReceiveHandler(Action<object, SerialDataReceivedEventArgs> handler) {
-            serialPort.SetDataReceiveHandler(handler);
+        public void SetDataReceivedHandler(SerialDataReceivedEventHandler handler) {
+            serialPort.SetDataReceivedHandler(handler);
+        }
+
+        public void DisposeReceivedHandler() {
+            serialPort.DisposeDataReceivedHandler();
         }
 
         public string[] GetSerialPortNames() {

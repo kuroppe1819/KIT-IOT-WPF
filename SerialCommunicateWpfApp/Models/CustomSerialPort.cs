@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace SerialCommunicateWpfApp.Models {
     class CustomSerialPort : SerialPort {
+        private SerialDataReceivedEventHandler DataReceivedHandler { get; set; }
+
         public CustomSerialPort() {
             DataBits = 8;
             Parity = Parity.None;
@@ -14,8 +16,13 @@ namespace SerialCommunicateWpfApp.Models {
             ReceivedBytesThreshold = 14; //DataReceivedイベントが発生するバッファのバイト数を設定する。
         }
 
-        public void SetDataReceiveHandler(Action<object, SerialDataReceivedEventArgs> handler) {
-            DataReceived += new SerialDataReceivedEventHandler(handler);
+        public void SetDataReceivedHandler(SerialDataReceivedEventHandler handler) {
+            DataReceivedHandler = handler;
+            DataReceived += handler;
+        }
+
+        public void DisposeDataReceivedHandler() {
+            DataReceived += DataReceivedHandler;
         }
 
         public void Open(string portName, int baudRate) {

@@ -11,7 +11,7 @@ namespace SerialCommunicateWpfApp.Controller {
         public Action<Device> RenderOfSerialData { get; set; }
 
         public MainController() {
-            model.SetDataReceiveHandler(DataReceivedHandler);
+            model.SetDataReceivedHandler(DataReceivedHandler);
         }
 
         public string ExcludeEndNumber(string str) {

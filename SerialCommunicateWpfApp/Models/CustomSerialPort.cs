@@ -12,8 +12,8 @@ namespace SerialCommunicateWpfApp.Models {
             ReadTimeout = 100000; //ミリ秒単位
         }
 
-        public void SetDataReceiveHandler(Action<object, SerialDataReceivedEventArgs> handler) {
-            DataReceived += new SerialDataReceivedEventHandler(handler);
+        public void SetDataReceivedHandler(SerialDataReceivedEventHandler handler) {
+            DataReceived += handler;
         }
 
         public void Open(string portName, int baudRate) {

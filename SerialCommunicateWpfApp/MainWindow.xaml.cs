@@ -43,28 +43,34 @@ namespace SerialCommunicateWpfApp {
                         datetimeBox.Text = device.DateTime.ToLongTimeString();
                         break;
                     case "TempBox":
-                        TextBox tempBox = control.FindName(control.Name) as TextBox;
-                        int temp = device.Temperature;
-                        tempBox.Text = (temp == Device.EMPTY) ? "" : $"{temp.ToString()}℃";
+                        if (device.ChildId == DeviceChildId.ENVIRONMENT) {
+                            TextBox tempBox = control.FindName(control.Name) as TextBox;
+                            tempBox.Text = (device.Temperature == Device.EMPTY) ? "" : $"{device.Temperature.ToString()}℃";
+                        }
                         break;
                     case "HumidityBox":
-                        TextBox humidityBox = control.FindName(control.Name) as TextBox;
-                        int humidity = device.Humidity;
-                        humidityBox.Text = (humidity == Device.EMPTY) ? "" : $"{humidity.ToString()}%";
+                        if (device.ChildId == DeviceChildId.ENVIRONMENT) {
+                            TextBox humidityBox = control.FindName(control.Name) as TextBox;
+                            humidityBox.Text = (device.Humidity == Device.EMPTY) ? "" : $"{device.Humidity.ToString()}%";
+                        }
                         break;
                     case "IlluminationBox":
-                        TextBox illuminationBox = control.FindName(control.Name) as TextBox;
-                        int illumination = device.Illumination;
-                        illuminationBox.Text = (illumination == Device.EMPTY) ? "" : $"{illumination.ToString()}lux";
+                        if (device.ChildId == DeviceChildId.ENVIRONMENT) {
+                            TextBox illuminationBox = control.FindName(control.Name) as TextBox;
+                            illuminationBox.Text = (device.Illumination == Device.EMPTY) ? "" : $"{device.Illumination.ToString()}lux";
+                        }
                         break;
                     case "DustBox":
-                        TextBox dustBox = control.FindName(control.Name) as TextBox;
-                        int dust = device.Dust;
-                        dustBox.Text = (dust == Device.EMPTY) ? "" : dust.ToString();
+                        if (device.ChildId == DeviceChildId.DUST) {
+                            TextBox dustBox = control.FindName(control.Name) as TextBox;
+                            dustBox.Text = (device.Dust == Device.EMPTY) ? "" : device.Dust.ToString();
+                        }
                         break;
                     case "Power":
-                        ProgressBar powerProgress = control.FindName(control.Name) as ProgressBar;
-                        powerProgress.Value = (device.CurrentSwitch) ? 100 : 0;
+                        if (device.ChildId == DeviceChildId.CURRENT) {
+                            ProgressBar powerProgress = control.FindName(control.Name) as ProgressBar;
+                            powerProgress.Value = (device.CurrentSwitch) ? 100 : 0;
+                        }
                         break;
                     default:
                         break;

@@ -75,7 +75,7 @@ namespace SerialCommunicateWpfApp.Controller {
             Device device = new Device();
             device.ChildId = buffer[0];
             device.AreaCode = (buffer[1] << 8) + buffer[2]; //上位桁と下位桁を結合
-            device.DateTime = new DateTime(int.Parse($"20{buffer[3]}"), buffer[4], buffer[5], buffer[6], buffer[7], buffer[8]);
+            device.DateTime = DateTime.Now;
             switch (device.ChildId) {
                 case DeviceChildId.CURRENT:
                     device.CurrentSwitch = (buffer[9] == 1) ? true : false;

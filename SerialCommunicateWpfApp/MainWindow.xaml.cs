@@ -25,7 +25,7 @@ namespace SerialCommunicateWpfApp {
         }
 
         private void RenderOfSerialData(Device device) {
-            this.Dispatcher.Invoke(new Action(() => {
+            this.Dispatcher.BeginInvoke(new Action(() => {
                 foreach (Control control in LayoutRoot.Children) {
                     if (control is GroupBox && controller.ExcludeEndNumber(control.Name) == "GroupArea") {
                         GroupBox groupBox = control.FindName("GroupArea" + device.AreaCode.ToString()) as GroupBox;

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Text;
 using System.IO.Ports;
-using System.Threading.Tasks;
 
 class CustomSerialPort : SerialPort {
     private SerialDataReceivedEventHandler DataReceivedHandler { get; set; }
+    private const int BYTES_THRESHOLD = 14;
 
     public CustomSerialPort() {
         DataBits = 8;
         Parity = Parity.None;
         StopBits = StopBits.One;
         Encoding = Encoding.UTF8;
-        ReadTimeout = 100000; //ミリ秒単位
-        ReceivedBytesThreshold = 14; //DataReceivedイベントが発生するバッファのバイト数を設定する。
+        ReadTimeout = 100000; //100秒
+        ReceivedBytesThreshold = BYTES_THRESHOLD; //DataReceivedイベントが発生するバッファのバイト数を設定する。
     }
 
     public void SetDataReceivedHandler(SerialDataReceivedEventHandler handler) {
@@ -31,14 +31,10 @@ class CustomSerialPort : SerialPort {
     }
 
     public byte[] ReadFrames() {
-        bool isTimeout = false;
-        Task.Run(async () => {
-            await Task.Delay(5000);
-            isTimeout = true;
-        });
-
+        int readCount = 0;
         while (ReadByte() != 0xFF) { //スタートビットを受信するまで調整する
-            if (isTimeout) {
+            readCount++;
+            if (readCount == BYTES_THRESHOLD) {
                 throw new TimeoutException();
             }
         }

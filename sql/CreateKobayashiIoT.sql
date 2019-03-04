@@ -1,5 +1,5 @@
-drop database if exists kobayashi_iot;
-drop user if exists sopackuser@localhost;
+-- drop database if exists kobayashi_iot;
+-- drop user if exists sopackuser@localhost;
 create database kobayashi_iot;
 use kobayashi_iot;
 create user sopackuser@localhost identified by 'sopa-0001';
